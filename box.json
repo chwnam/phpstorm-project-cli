@@ -1,0 +1,17 @@
+{
+  "main": "src/index.php",
+  "output": "bin/command.phar",
+  "directories": [
+    "src"
+  ],
+  "finder": [
+    {
+      "name": "*.php",
+      "exclude": [
+        "test",
+        "tests"
+      ],
+      "in": "vendor"
+    }
+  ]
+}
