@@ -1,6 +1,11 @@
 {
-  "name": "changwoo/phpstorm-workspace-setup-helper",
+  "name": "changwoo/phpstorm-project-cli",
   "description": "Automate PhpStorm Workspace Settings",
+  "autoload": {
+    "psr-4": {
+      "Changwoo\\PhpStormProjectCli\\": "src/"
+    }
+  },
   "require": {
     "php": "^8.1",
     "splitbrain/php-cli": "^1.3",
