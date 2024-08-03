@@ -7,7 +7,7 @@
 
 use function FluidXml\fluidify;
 
-require_once dirname(__DIR__, 2) . '/vendor/autoload.php';
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 require_once __DIR__ . '/utils.php';
 
 /**
@@ -39,7 +39,8 @@ function addCustomDictionaries(string $projectDirectory, array $customDictionari
     $newCustomDictionaries = [];
 
     // Step 01: Fetch current folders.
-    $numFolders = $node->hasAttribute('Folders') ? (int)$node->getAttribute('Folders') : 0;
+    $numFolders = $node->hasAttribute('Folders') ?
+        (int)$node->getAttribute('Folders') : 0;
     if ($numFolders > 0) {
         for ($i = 0; $i < $numFolders; $i++) {
             if ($node->hasAttribute("Folder$i")) {
@@ -49,9 +50,8 @@ function addCustomDictionaries(string $projectDirectory, array $customDictionari
     }
 
     // Step 02: Fetch current custom dictionaries.
-    $numCustomDictionaries = $node->hasAttribute('CustomDictionaries') ? (int)$node->getAttribute(
-        'CustomDictionaries'
-    ) : 0;
+    $numCustomDictionaries = $node->hasAttribute('CustomDictionaries') ?
+        (int)$node->getAttribute('CustomDictionaries') : 0;
     if ($numCustomDictionaries > 0) {
         for ($i = 0; $i < $numCustomDictionaries; $i++) {
             if ($node->hasAttribute("CustomDictionary$i")) {
