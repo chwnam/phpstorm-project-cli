@@ -48,10 +48,15 @@ function getFluidXml(string $xmlPath): FluidXml
     return \FluidXml\fluidify($xmlPath);
 }
 
+function getIdeaFilePath(string $projectDirectory, string $fileName): string
+{
+    return "$projectDirectory/.idea/$fileName";
+}
+
 
 function getWorkspacePath(string $projectDirectory): string
 {
-    return $projectDirectory . '/.idea/workspace.xml';
+    return getIdeaFilePath($projectDirectory, 'workspace.xml');
 }
 
 
@@ -80,15 +85,20 @@ function fetchComponent(\FluidXml\FluidXml $xml, string $componentName): FluidCo
 /**
  * Save file
  *
- * @param FluidXml $xml
+ * @param FluidXml|FluidContext $xml
  * @param string $path
  * @param bool $makeBackup
  *
  * @return void
  * @throws Exception
  */
-function saveXml(FluidXml $xml, string $path, bool $makeBackup = true): void
+function saveXml(FluidXml|FluidContext $xml, string $path, bool $makeBackup = true): void
 {
+    if ('-' === $path) {
+        echo $xml->xml() . PHP_EOL;
+        return;
+    }
+
     if ($makeBackup) {
         $index = 0;
         do {
