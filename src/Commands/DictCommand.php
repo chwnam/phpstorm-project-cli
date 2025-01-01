@@ -5,21 +5,41 @@ namespace Changwoo\PStormCLI\Commands;
 use GetOpt\Command;
 use GetOpt\GetOpt;
 use GetOpt\Operand;
+use GetOpt\Option;
 
 class DictCommand extends Command
 {
     public function __construct()
     {
-        parent::__construct('dict', [$this, 'handle']);
+        parent::__construct('dict:add', [$this, 'handle']);
 
-        $this->addOperands([
-//            Operand::create('file', Operand::REQUIRED)->setValidation('is_readable'),
-//            Operand::create('destination', Operand::REQUIRED)->setValidation('is_writable')
-        ]);
+        $this
+            ->setDescription('Add a custom dictionary file.')
+            ->addOptions(
+                [
+                    Option::create('f', 'file', GetOpt::REQUIRED_ARGUMENT)
+                          ->setDescription('Path to .dic file.')
+                          ->setValidation('is_file')
+                          ->setValidation('is_readable'),
+                    Option::create('p', 'project', GetOpt::OPTIONAL_ARGUMENT)
+                          ->setDescription('Project directory. Defaults to the current directory.')
+                          ->setValidation('is_dir')
+                          ->setValidation('is_readable')
+                          ->setValidation('is_executable')
+                          ->setDefaultValue('.'),
+                ],
+            )
+        ;
     }
 
+    /**
+     * @throws \Exception
+     */
     public function handle(GetOpt $getOpt): void
     {
-        echo $getOpt->getOperand('file') . "\n" . $getOpt->getOperand('destination') . "\n";
+        addCustomDictionaries(
+            realpath($getOpt->getOption('p')),
+            (array)$getOpt->getOption('f'),
+        );
     }
 }
